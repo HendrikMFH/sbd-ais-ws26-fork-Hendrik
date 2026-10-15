@@ -1,0 +1,148 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This system enables drink orders and should not be used for the forbidden Hungover Games.",
+        "title": "Order System",
+        "contact": {
+            "name": "Your Name"
+        }
+    },
+    "paths": {
+        "/api/menu": {
+            "get": {
+                "description": "Returns the menu of all drinks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Drink"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/order": {
+            "post": {
+                "description": "Adds an order to the db",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "parameters": [
+                    {
+                        "description": "Order",
+                        "name": "b",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/orders/all": {
+            "get": {
+                "description": "Returns all orders",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Order"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/total": {
+            "get": {
+                "description": "Returns amount of orders for each drink",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TotalOrders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Drink": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "todo Add fields: Name, Price, Description with suitable types\ntodo json attributes need to be snakecase, i.e. name, created_at, my_variable, ..",
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "Order": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "todo Add fields: CreatedAt (time.Time), Amount with suitable types\ntodo json attributes need to be snakecase, i.e. name, created_at, my_variable, ..",
+                    "type": "string"
+                },
+                "drink_id": {
+                    "description": "foreign key",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
